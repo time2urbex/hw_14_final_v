@@ -15,6 +15,8 @@ def get_movie_by_name(name):
     return data[0], data[1]
 
 
+
+
 """
 {{ post["content"][:50] |safe }}
 """
