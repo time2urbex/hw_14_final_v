@@ -3,15 +3,14 @@ import sqlite3
 
 def get_movie_by_name(name):
     con = sqlite3.connect("netflix.db")
+    con.row_factory = sqlite3.Row
     cur = con.cursor()
-    sqlite_query = ("SELECT `title`,`country`,`release_year`,`listed_in`,`description` FROM netflix "
-                    "WHERE `title` LIKE title_name "
-                    "AND type='Movie'")
+    sqlite_query = ("SELECT `title`,`country`,`release_year`,`listed_in`,`description` FROM netflix limit 1")
 
     result = cur.execute(sqlite_query)
     data = cur.fetchone()  # С помощью этой функции получаем результат запроса в виде списка кортежей
     con.close()  # После выполнения запросов обязательно закрываем соединение с БД
-    return data[0], data[1]
+    return dict(data)
 
 def convert_to_jsonify():
     for listed_in in get_movie_by_name:
